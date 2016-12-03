@@ -9,28 +9,28 @@ let contacts = require('./data');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors());
 
-app.get('/api/contacts',(request, response) => {
+app.get('/api/contacts',(req, res) => {
   if(!contacts){
-    response.status(404).json({message: 'no contacts found'})
+    res.status(404).json({message: 'no contacts found'})
   }
-  response.json(contacts);
+  res.json(contacts);
 })
 
-app.get('/api/contacts/:id',(request,response)=>{
-  const requestId = request.params.id;
+app.get('/api/contacts/:id',(req,res)=>{
+  const requestId = req.params.id;
   let contact = contacts.filter(contact => {
     return contact.id == requestId;
   })
 
   if(!contact){
-    response.status(404).json({message: 'no contact found'})
+    res.status(404).json({message: 'no contact found'})
   }
 
-  response.json(contact[0]);
+  res.json(contact[0]);
 })
 
-app.post('/api/contacts',(request,response)=>{
-  const payload = request.body
+app.post('/api/contacts',(req,res)=>{
+  const payload = req.body
   const contact = {
     id: contacts.length + 1,
     first_name: payload.first_name,
@@ -40,10 +40,25 @@ app.post('/api/contacts',(request,response)=>{
   }
   contacts.push(contact);
 
-  response.json(contact);
+  res.json(contact);
 })
 
+app.put('/api/contacts/:id', function (req, res) {
+  const requestId = req.params.id;
+  let contact = contacts.filter(contact => {
+    return contact.id == requestId;
+  })[0];
+  console.log(contact);
+  const index = contacts.indexOf(contact);
 
+  const keys = Object.keys(req.body);
+  keys.forEach(function(key) {
+    contact[key] = req.body[key]
+  });
+  contacts[index] = contact
+  console.log(contact)
+  res.json(contacts[index]);
+});
 
 
 
