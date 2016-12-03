@@ -3,13 +3,17 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const cors = require('cors'); //8080
+const cors = require('cors');
+let contacts = require('./data');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors());
 
 app.get('/api/contacts',(request, response) => {
-  response.send('hello world');
+  if(!contacts){
+    response.status(404).json({message: 'no contacts found'})
+  }
+  response.json(contacts);
 })
 
 const hostname = 'localhost'
