@@ -48,7 +48,7 @@ app.put('/api/contacts/:id', function (req, res) {
   let contact = contacts.filter(contact => {
     return contact.id == requestId;
   })[0];
-  console.log(contact);
+
   const index = contacts.indexOf(contact);
 
   const keys = Object.keys(req.body);
@@ -56,11 +56,19 @@ app.put('/api/contacts/:id', function (req, res) {
     contact[key] = req.body[key]
   });
   contacts[index] = contact
-  console.log(contact)
   res.json(contacts[index]);
 });
 
-
+app.delete('/api/contacts/:id', function (req, res) {
+  const requestId = req.params.id;
+  let contact = contacts.filter(contact => {
+    return contact.id == requestId;
+  })[0];
+  console.log(contact);
+  const index = contacts.indexOf(contact);
+  contacts.splice(index,1);
+  res.json({message: `User with contact id: ${requestId} has been deleted`})
+});
 
 
 
