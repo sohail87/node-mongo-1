@@ -64,9 +64,11 @@ app.delete('/api/contacts/:id', function (req, res) {
   let contact = contacts.filter(contact => {
     return contact.id == requestId;
   })[0];
-  console.log(contact);
+
   const index = contacts.indexOf(contact);
+
   contacts.splice(index,1);
+
   res.json({message: `User with contact id: ${requestId} has been deleted`})
 });
 
