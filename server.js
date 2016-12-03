@@ -29,6 +29,26 @@ app.get('/api/contacts/:id',(request,response)=>{
   response.json(contact[0]);
 })
 
+app.post('/api/contacts',(request,response)=>{
+  const payload = request.body
+  const contact = {
+    id: contacts.length + 1,
+    first_name: payload.first_name,
+    last_name: payload.last_name,
+    email: payload.email,
+    website: payload.website
+  }
+  contacts.push(contact);
+
+  response.json(contact);
+})
+
+
+
+
+
+
+
 const hostname = 'localhost'
 const port = 3001;
 
