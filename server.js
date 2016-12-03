@@ -16,6 +16,19 @@ app.get('/api/contacts',(request, response) => {
   response.json(contacts);
 })
 
+app.get('/api/contacts/:id',(request,response)=>{
+  const requestId = request.params.id;
+  let contact = contacts.filter(contact => {
+    return contact.id == requestId;
+  })
+
+  if(!contact){
+    response.status(404).json({message: 'no contact found'})
+  }
+
+  response.json(contact[0]);
+})
+
 const hostname = 'localhost'
 const port = 3001;
 
