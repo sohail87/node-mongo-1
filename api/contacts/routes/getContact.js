@@ -3,17 +3,20 @@ const mongoose = require('mongoose');
 const Contact = require('../model/contact');
 const router = express.Router();
 
-router.route('/')
-  .post((req, res) => {
+router.route('/:id')
+  .get((req, res) => {
 
-    const contact = new Contact(req.body);
+    const _id = req.params.id;
 
-    contact.save((err, contact) => {
+    Contact.findOne({ _id }, (err, contact) => {
       if (err) {
         res.status(400).json(err);
       }
+      if (!contact) {
+        res.status(404).json({ message: 'Contact not found.' });
+      }
+
       res.json(contact);
-      // res.json({ message: 'Contact saved! '});
     });
 
   });

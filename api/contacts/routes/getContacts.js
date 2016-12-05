@@ -4,16 +4,13 @@ const Contact = require('../model/contact');
 const router = express.Router();
 
 router.route('/')
-  .post((req, res) => {
+  .get((req, res) => {
 
-    const contact = new Contact(req.body);
-
-    contact.save((err, contact) => {
+    Contact.find({}, (err, contacts) => {
       if (err) {
         res.status(400).json(err);
       }
-      res.json(contact);
-      // res.json({ message: 'Contact saved! '});
+      res.json(contacts);
     });
 
   });
