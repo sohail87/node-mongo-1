@@ -40,6 +40,7 @@ app.get('/api/contacts/:id',(req,res)=>{
   res.json(contact[0]);
 })
 
+/*
 app.post('/api/contacts',(req,res)=>{
   const payload = req.body
   const contact = {
@@ -53,6 +54,8 @@ app.post('/api/contacts',(req,res)=>{
 
   res.json(contact);
 })
+*/
+app.use('/api/contacts', require('./api/contacts/routes/postContact'));
 
 app.put('/api/contacts/:id', function (req, res) {
   const requestId = req.params.id;
